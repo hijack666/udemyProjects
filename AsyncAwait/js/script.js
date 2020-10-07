@@ -202,18 +202,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
         return await res.json(); // Promise => тоже добавляем await 
     };
 
-    // getResource('http://localhost:3000/menu')
-    //     .then(data => {
-    //         // data.forEach(obj => {
-            // data.forEach( ({img, altimg, title, descr, price}) => {  //Деструктуризация
-            //     // new MenuCard(obj.img, obj.altimg etc).render();
-            //     new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
-    //         });
-    //     });
-
     // Библиотека axios
     axios.get('http://localhost:3000/menu')
-        .then(data => console.log(data)) // Получаем сразу объект
+        // .then(data => console.log(data)) // Получаем сразу объект
         .then(data => {
             data.data.forEach( ({img, altimg, title, descr, price}) => {  //Деструктуризация
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
@@ -291,15 +282,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
 
 
-            // fetch('server.php', {
-            //     method: 'POST',
-            //     // headers: {
-            //     //     'Content-Type': 'application/json'
-            //     // },
-            //     body: formData
-            // })
-            // postData('server.php', JSON.stringify(object))
-            // postData('http://localhost:3000/requests', JSON.stringify(object))
+            
             postData('http://localhost:3000/requests', json)
                 .then( data => {
                     console.log(data);
@@ -339,25 +322,59 @@ window.addEventListener('DOMContentLoaded', ()=>{
         }, 4000);
     }
 
-    // fetch('https://jsonplaceholder.typicode.com/todos/1')  // Get запрос
-    //     .then(response => response.json())  // метод .json превращает объект в json
-    //     .then(json => console.log(json));
-
-    // fetch('https://jsonplaceholder.typicode.com/posts', {
-    //     method: "POST",
-    //     body: JSON.stringify({ name: "Alex"}),
-    //     headers: {
-    //         'Content-type': 'application/json'
-    //     }
-    // }) 
-    // .then(response => response.json())  
-    // .then(json => console.log(json));
-
-    // fetch('db.json')
-    //     .then(data => data.json())
-    //     .then(res => console.log(res));
-    //После запуска json-server
-    fetch('http://localhost:3000/menu')
-        .then(data => data.json())
+    // fetch('http://localhost:3000/menu')
+        // .then(data => data.json())
         // .then(res => console.log(res));
+
+    /* Слайдер 1 варимант Slider */
+    const slides = document.querySelectorAll('.offer__slide');
+    const prev = document.querySelector('.offer__slider-prev');
+    const next = document.querySelector('.offer__slider-next');
+    const total = document.querySelector('#total');
+    const current = document.querySelector('#current');
+
+    let sliderIndex = 1;
+
+    showSlides(sliderIndex);
+
+    if (slides.length < 10) {
+        total.textContent = `0${slides.length}`;
+    } else {
+        total.textContent = `${slides.length}`;
+    }
+
+    function showSlides(n) {
+        if (n > slides.length ) {
+            sliderIndex = 1;
+        }
+
+        if (n < 1) {
+            sliderIndex = slides.length;
+        }
+
+        slides.forEach( item => {
+            item.style.display = 'none';
+        });
+
+        slides[sliderIndex - 1].style.display = 'block';
+
+        if (slides.length < 10) {
+            current.textContent = `0${sliderIndex}`;
+        } else {
+            current.textContent = `${sliderIndex}`;
+        }
+    }
+
+    function plusSlides (n) {
+        showSlides(sliderIndex += n);
+    }
+
+    prev.addEventListener('click', ()=> {
+        plusSlides(-1);
+    });
+    next.addEventListener('click', ()=> {
+        plusSlides(1);
+    })
+
+
 });
