@@ -202,28 +202,26 @@ window.addEventListener('DOMContentLoaded', ()=>{
         return await res.json(); // Promise => тоже добавляем await 
     };
 
-    getResource('http://localhost:3000/menu')
+    // getResource('http://localhost:3000/menu')
+    //     .then(data => {
+    //         // data.forEach(obj => {
+            // data.forEach( ({img, altimg, title, descr, price}) => {  //Деструктуризация
+            //     // new MenuCard(obj.img, obj.altimg etc).render();
+            //     new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+    //         });
+    //     });
+
+    // Библиотека axios
+    axios.get('http://localhost:3000/menu')
+        .then(data => console.log(data)) // Получаем сразу объект
         .then(data => {
-            // data.forEach(obj => {
-            data.forEach( ({img, altimg, title, descr, price}) => {  //Деструктуризация
-                // new MenuCard(obj.img, obj.altimg etc).render();
+            data.data.forEach( ({img, altimg, title, descr, price}) => {  //Деструктуризация
                 new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
             });
         });
 
-    // new MenuCard(
-    //     "img/tabs/vegy.jpg", 
-    //     "vegy", 
-    //     'Меню "Фитнес"', 
-    //     'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!', 
-    //     9,
-    //     '.menu__field .container',
-    //     'menu__item',
-    //     'big'
-    // ).render();
-
-    getResource('http://localhost:3000/menu')
-        .then(data => createCard(data));
+    // getResource('http://localhost:3000/menu')
+    //     .then(data => createCard(data)); // Больше не надо создавать
 
     function createCard(data) {
         data.forEach(({img, altimg, title, descr, price}) => {
@@ -361,5 +359,5 @@ window.addEventListener('DOMContentLoaded', ()=>{
     //После запуска json-server
     fetch('http://localhost:3000/menu')
         .then(data => data.json())
-        .then(res => console.log(res));
+        // .then(res => console.log(res));
 });
