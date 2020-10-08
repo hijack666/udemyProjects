@@ -385,6 +385,14 @@ window.addEventListener('DOMContentLoaded', ()=>{
     const width = window.getComputedStyle(slidesWrapper).width; //получили ширину 
     let offset = 0; // отступ
 
+    function slidesLessDec() {
+        if (slides.length < 10) {
+            current.textContent = `0${sliderIndex}`;
+        } else {
+            current.textContent = sliderIndex;
+        }
+    }
+
     if (slides.length < 10) {
         total.textContent = `0${slides.length}`;
         current.textContent = `0${sliderIndex}`;
@@ -423,6 +431,11 @@ window.addEventListener('DOMContentLoaded', ()=>{
         dots.push(dot);
     }
 
+    function activeIndicator() {
+        dots.forEach(dot => dot.style.opacity = '0.5');
+        dots[sliderIndex - 1].style.opacity = 1;
+    }
+
     next.addEventListener('click', () => {
         if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) { // '500px' -> 500
             offset = 0;
@@ -438,14 +451,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
             sliderIndex++;
         }
 
-        if (slides.length < 10) {
-            current.textContent = `0${sliderIndex}`;
-        } else {
-            current.textContent = sliderIndex;
-        }
+        slidesLessDec();
 
-        dots.forEach(dot => dot.style.opacity = '0.5');
-        dots[sliderIndex - 1].style.opacity = 1;
+        activeIndicator();
 
     });
 
@@ -464,14 +472,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
             sliderIndex--;
         }
 
-        if (slides.length < 10) {
-            current.textContent = `0${sliderIndex}`;
-        } else {
-            current.textContent = sliderIndex;
-        }
+        slidesLessDec();
 
-        dots.forEach(dot => dot.style.opacity = '0.5');
-        dots[sliderIndex - 1].style.opacity = 1;
+        activeIndicator();
     });
 
     dots.forEach( dot => {
@@ -483,15 +486,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
             offset = +width.slice(0, width.length - 2) * (slideTo - 1);
             slidesField.style.transform = `translateX(-${offset}px)`;
 
-            if (slides.length < 10) {
-                current.textContent = `0${sliderIndex}`;
-            } else {
-                current.textContent = sliderIndex;
-            }
+            slidesLessDec();
 
-            dots.forEach(dot => dot.style.opacity = '0.5');
-            dots[sliderIndex - 1].style.opacity = 1;
-
+            activeIndicator();
         });
     })
 });
