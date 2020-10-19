@@ -436,12 +436,17 @@ window.addEventListener('DOMContentLoaded', ()=>{
         dots[sliderIndex - 1].style.opacity = 1;
     }
 
+    function deleteNotDigits(string) {
+        return +string.replace(/\D/g, '');
+    }
+
     next.addEventListener('click', () => {
         // if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) { // '500px' -> 500
-        if (offset == +width.replace(/\D/g, '') * (slides.length - 1)) { // Регулярные выражения, удаляем все не числа
+        // if (offset == +width.replace(/\D/g, '') * (slides.length - 1)) { // Регулярные выражения, удаляем все не числа
+        if (offset == deleteNotDigits(width) * (slides.length - 1)) {
             offset = 0;
         } else {
-            offset += +width.replace(/\D/g, '');
+            offset += deleteNotDigits(width);
         }
 
         slidesField.style.transform = `translateX(-${offset}px)`;
@@ -460,9 +465,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     prev.addEventListener('click', () => {
         if (offset == 0) { // '500px' -> 500
-        offset = +width.replace(/\D/g, '') * (slides.length - 1);
+        offset = deleteNotDigits(width) * (slides.length - 1);
         } else {
-            offset -= +width.replace(/\D/g, '');
+            offset -= deleteNotDigits(width);
         }
 
         slidesField.style.transform = `translateX(-${offset}px)`;
@@ -484,7 +489,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
             sliderIndex = slideTo;
             // offset = +width.slice(0, width.length - 2) * (slides.length - 1);
-            offset = +width.replace(/\D/g, '') * (slideTo - 1);
+            offset = deleteNotDigits(width) * (slideTo - 1);
             slidesField.style.transform = `translateX(-${offset}px)`;
 
             slidesLessDec();
