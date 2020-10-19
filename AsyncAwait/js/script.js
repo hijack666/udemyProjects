@@ -437,10 +437,11 @@ window.addEventListener('DOMContentLoaded', ()=>{
     }
 
     next.addEventListener('click', () => {
-        if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) { // '500px' -> 500
+        // if (offset == +width.slice(0, width.length - 2) * (slides.length - 1)) { // '500px' -> 500
+        if (offset == +width.replace(/\D/g, '') * (slides.length - 1)) { // Регулярные выражения, удаляем все не числа
             offset = 0;
         } else {
-            offset += +width.slice(0, width.length - 2);
+            offset += +width.replace(/\D/g, '');
         }
 
         slidesField.style.transform = `translateX(-${offset}px)`;
@@ -459,9 +460,9 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
     prev.addEventListener('click', () => {
         if (offset == 0) { // '500px' -> 500
-        offset = +width.slice(0, width.length - 2) * (slides.length - 1);
+        offset = +width.replace(/\D/g, '') * (slides.length - 1);
         } else {
-            offset -= +width.slice(0, width.length - 2);
+            offset -= +width.replace(/\D/g, '');
         }
 
         slidesField.style.transform = `translateX(-${offset}px)`;
@@ -483,7 +484,7 @@ window.addEventListener('DOMContentLoaded', ()=>{
 
             sliderIndex = slideTo;
             // offset = +width.slice(0, width.length - 2) * (slides.length - 1);
-            offset = +width.slice(0, width.length - 2) * (slideTo - 1);
+            offset = +width.replace(/\D/g, '') * (slideTo - 1);
             slidesField.style.transform = `translateX(-${offset}px)`;
 
             slidesLessDec();
