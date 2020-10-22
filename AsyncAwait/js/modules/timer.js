@@ -1,6 +1,6 @@
 // ТАЙМЕР
-function timer() {
-    const deadline = '2020-08-11';
+function timer(id, deadline) {
+    // const deadline = '2020-08-11';
 
     function getTimeRemaining(endtime) {
         const t = Date.parse(endtime) - Date.parse(new Date()), // endtime количество мс в конечном времени, отнимаем текущую дату
@@ -50,7 +50,7 @@ function timer() {
         }
     }
 
-    setClock('.timer', deadline);
+    setClock(id, deadline);
 }
 
-module.exports = timer;
+export default timer;

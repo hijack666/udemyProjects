@@ -1,6 +1,9 @@
-function forms() {
+import {closeModal, openModal} from './modal';
+import {postData} from '../services/services';
+
+function forms(formSelector, modalTimerId) {
     // Формы с запросами
-    const forms = document.querySelectorAll('form');
+    const forms = document.querySelectorAll(formSelector);
 
     const message = {
         loading: 'img/spinner.svg',
@@ -11,20 +14,6 @@ function forms() {
     forms.forEach(item => {
         bindPostData(item);
     });
-
-    const postData = async (url, data) => { //Добавляя 'async' говорим что внутри ф-ции будет асинхронный код
-        const res = await fetch(url, { // Добавляя await - ждем выполнение этой операции
-            method: "POST",
-            headers: {
-                'Content-type': 'application/json'
-            },
-            body: data
-        });
-
-        return await res.json(); // Promise => тоже добавляем await 
-    };
-
-
 
     // function postData(form) {
     function bindPostData(form) {
@@ -62,6 +51,31 @@ function forms() {
 
         });
     }
+
+    // ShowThanksModal
+    function showThanksModal(message) {
+        const prevModalDialog = document.querySelector('.modal__dialog');
+
+        prevModalDialog.classList.add('hide');
+        openModal('.modal', modalTimerId);
+
+        const thanksModal = document.createElement('div');
+        thanksModal.classList.add('modal__dialog');
+        thanksModal.innerHTML = `
+            <div class="modal__content">
+                <div class="modal__close" data-close>×</div>
+                <div class="modal__title">${message}</div>
+            </div>
+            `;
+
+        document.querySelector('.modal').append(thanksModal);
+        setTimeout(() => {
+            thanksModal.remove();
+            prevModalDialog.classList.add('show');
+            prevModalDialog.classList.remove('hide');
+            closeModal('.modal');
+        }, 4000);
+    }
 }
 
-module.exports = forms;
+export default forms;

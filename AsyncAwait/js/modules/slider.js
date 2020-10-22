@@ -1,60 +1,19 @@
-function slider() {
+function slider({container, slide, nextArrow, prevArrow, totalCounter, currentCounter, wrapper, field}) {
     /* Слайдер 1 варимант Slider */
-    const slides = document.querySelectorAll('.offer__slide');
-    const prev = document.querySelector('.offer__slider-prev');
-    const next = document.querySelector('.offer__slider-next');
-    const total = document.querySelector('#total');
-    const current = document.querySelector('#current');
+    const slides = document.querySelectorAll(slide);
+    const prev = document.querySelector(prevArrow);
+    const next = document.querySelector(nextArrow);
+    const total = document.querySelector(totalCounter);
+    const current = document.querySelector(currentCounter);
 
-    const slider = document.querySelector('.offer__slider');
+    const slider = document.querySelector(container);
 
     let sliderIndex = 1;
 
-    // showSlides(sliderIndex);
-
-    // if (slides.length < 10) {
-    //     total.textContent = `0${slides.length}`;
-    // } else {
-    //     total.textContent = `${slides.length}`;
-    // }
-
-    // function showSlides(n) {
-    //     if (n > slides.length ) {
-    //         sliderIndex = 1;
-    //     }
-
-    //     if (n < 1) {
-    //         sliderIndex = slides.length;
-    //     }
-
-    //     slides.forEach( item => {
-    //         item.style.display = 'none';
-    //     });
-
-    //     slides[sliderIndex - 1].style.display = 'block';
-
-    //     if (slides.length < 10) {
-    //         current.textContent = `0${sliderIndex}`;
-    //     } else {
-    //         current.textContent = `${sliderIndex}`;
-    //     }
-    // }
-
-    // function plusSlides (n) {
-    //     showSlides(sliderIndex += n);
-    // }
-
-    // prev.addEventListener('click', ()=> {
-    //     plusSlides(-1);
-    // });
-    // next.addEventListener('click', ()=> {
-    //     plusSlides(1);
-    // })
-
     /* Слайдер 2 варимант Slider carousel карусель */
 
-    const slidesWrapper = document.querySelector('.offer__slider-wrapper');
-    const slidesField = document.querySelector('.offer__slider-inner');
+    const slidesWrapper = document.querySelector(wrapper);
+    const slidesField = document.querySelector(field);
     const width = window.getComputedStyle(slidesWrapper).width; //получили ширину 
     let offset = 0; // отступ
 
@@ -172,4 +131,4 @@ function slider() {
     });
 }
 
-module.exports = slider;
+export default slider;
