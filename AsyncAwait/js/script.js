@@ -1,3 +1,6 @@
+require('es6-promise').polyfill(); // полифилл для es6 промисов, которые не работают в IE
+import 'nodelist-foreach-polyfill'; // Тоже для IE, запись имеет свою особенность - пакет подключится именно в этот скриптовый файл
+
 // ТАБЫ
 import tabs from './modules/tabs';
 
